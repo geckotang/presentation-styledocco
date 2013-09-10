@@ -38,7 +38,7 @@
 			<div class="slides">
 
 				<section class="mod-top">
-					<h1>Styledoccoで作るスタイルガイド</h1>
+					<h1>Styledocco</h1>
 					<p>
 						<small><a href="http://twitter.com/GeckoTang">@GeckoTang</a></small>
 					</p>
@@ -46,63 +46,280 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						## 目次
-
-						* StyleDoccoとは
-						* 僕の環境
-						* Gruntでやってみた
-						* 参考サイト
-
-					</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
 						## Styledoccoとは
 
-						* [StyleDocco](http://jacobrask.github.io/styledocco/)
-						* CSSのドキュメント・スタイルガイド自動生成ツール
-						* コメントアウトの中にMarkdownで書く
+						* CSS/Sass上のコメントをパースして<br>スタイルガイドを生成する
+						* Gruntのプラグインもある
+						* 他にも
+							[KSS](http://warpspire.com/kss/styleguides/),
+							[KSS-node](http://shoogledesigns.com/blog/blog/2013/07/18/automate-the-generation-of-your-style-guides-with-kss-node/), 
+							[Kalei](http://kaleistyleguide.com/) 
+							などがある。
 
 					</script>
 				</section>
 
+
 				<section data-markdown>
 					<script type="text/template">
-						## 僕の環境
+						## Styledoccoを選んだ理由
+						* Gruntのプラグインある
+						* Compass使っても問題ない
+						* ある程度見た目良い
+						* Markdownで記述していく
+						* プレビューエリアのりサイズ機能
+						---
+						<small>KSS-nodeはLessしか使えないの…</small>
+					</script>
+				</section>
 
-						Grunt+Compass+StyleDocco
 
-						``` sh
-						gem install sass
-						gem install compass
-						npm install -fg styledocco
-						npm install grunt-contrib-compass
-						npm install grunt-styleguide
+				<section data-markdown>
+					<script type="text/template">
+						## GruntからStyleDoccoする
+
+						必要そうなものをインストール...
+
+						``` zsh
+						npm install styledocco --save-dev
+						npm install grunt-styleguide --save-dev
+						npm install grunt-contrib-sass --save-dev
+						npm install grunt-contrib-clean --save-dev
+						npm install grunt-contrib-watch --save-dev
 						```
 
 						---
-
-						<small>情報が多いからか、比較的Compassを使ってる人多い気がする</small>
+						<small>※grunt-styleguideはstyledoccoとKSS-nodeのラッパーです</small><br>
 
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## 今回の環境
-
-						* Sass(*.scss)
-						* Compass
-						* Grunt
-
+						## ディレクトリ構成
+						```
+						htdocs
+						┣docs
+						┗css
+						　┣src
+						　┃┣doc-preview.js
+						　┃┣README.md
+						　┃┣style.scss
+						　┃┗partial
+						　┃　┣_button.scss
+						　┃　┗_mixin.scss
+						　┣vendor
+						　┃┣_media-queries.scss
+						　┃┗_normalize.scss
+						　┗style.css
+						```
 						---
+						<small>※doc-preview.jsはプレビューエリア用に追加したJSです</small><br>
+					</script>
+				</section>
 
-						<small>※Compassをプロジェクト毎にインストールして色々起きたけどそれはまた別の話</small>
+				<section data-markdown>
+					<script type="text/template">
+						## Gruntfile.jsを書きます。
+
+``` javascript
+module.exports = function(grunt){
+  var matchdep = require('matchdep');
+  matchdep.filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  var config = {
+    pkg: grunt.file.readJSON('package.json'),
+    styleguide: {
+      styledocco: {
+        options: {
+          framework: { name: 'styledocco' },
+          name: 'プロジェクトX',
+          template: { include: ['htdocs/css/src/doc-preview.js'] }
+        },
+        src: [ 'htdocs/css/**/*.scss', '!htdocs/css/vendor/**/*.scss' ],
+        dest: 'htdocs/_doc'
+      }
+    },
+    sass: {
+      dist: {
+        options: { style: 'expanded' },
+        files: { 'htdocs/css/style.css': 'htdocs/css/src/style.scss' }
+      }
+    },
+    clean: ['<%= styleguide.styledocco.dest %>'],
+    watch: {
+      scss: {
+        files: 'htdocs/css/**/*.scss',
+        tasks: ['clean', 'sass', 'styleguide']
+      }
+    }
+  };
+  grunt.initConfig(config);
+  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('build', ['clean', 'sass', 'styleguide']);
+};
+
+```
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## SCSSを書きます。
+
+``` sass
+.button{
+	display: inline-block;
+	font-size: 14px;
+	color: #fff;
+	background-color: #ccc;
+	padding: 1em;
+	border-radius: 10px;
+	&:hover {
+		color: $background;
+		background-color: $color;
+		box-shadow: 0 0 2px #000;
+	}
+	&:active {
+		position: relative;
+		top: 2px;
+		color: $background;
+		background-color: $color;
+		box-shadow: inset 0 0 10px #000;
+	}
+	&.is-disabled {
+		color: #fff;
+		background-color: #ccc;
+	}
+}
+```
+						スタイルガイド用にコメントを追記します。
+
 
 					</script>
 				</section>
 
+
+				<section data-markdown>
+					<script type="text/template">
+						## コメントの書き方
+
+						<small>
+						コメントアウトの中にMarkdownで書く。<br>
+						スペースを行頭に入れるとスタイルガイド上には反映されません
+						</small>
+
+``` css
+// #見出し1になる
+// これは文章です。これは文章です。
+ // これはドキュメントには反映されません
+```
+``` css
+/*
+ # 見出し1になる
+ これは文章です。これは文章です。
+
+    <div class="mod-box"></div>
+
+*/
+```
+						---
+						<small>
+						コードフェンスで囲うか、4スペースインデントしてHTMLを書くことで<br>
+						スタイルガイド上に、プレビューエリアが作成されます。
+						</small>
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+						## コメントを追記
+
+						``` sass
+/*
+## 普通のボタン
+
+    <a class="button" href="#">normal</a>
+    <a class="button  :hover" href="#">hover</a>
+    <a class="button  :active" href="#">active</a>
+    <a class="button  is-disabled" href="#">disabled</a>
+
+*/
+.button{
+	display: inline-block;
+	font-size: 14px;
+	color: #fff;
+	background-color: #ccc;
+	padding: 1em;
+	border-radius: 10px;
+	&:hover {
+		color: $background;
+		background-color: $color;
+		box-shadow: 0 0 2px #000;
+	}
+	&:active {
+		position: relative;
+		top: 2px;
+		color: $background;
+		background-color: $color;
+		box-shadow: inset 0 0 10px #000;
+	}
+	&.is-disabled {
+		color: #fff;
+		background-color: #ccc;
+	}
+}
+						```
+						---
+						<small>
+						プレビューさせるHTMLのclass属性に:hoverや:activeなどの擬似クラスを書くと<br>
+						その状態のプレビューが可能になります。
+						</small>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## そして生成
+						```
+						grunt build
+						```
+						docsの中にHTMLができているので確認する。
+						```
+						┣docs
+						┃┣index.html
+						┃┣style.html
+						┃┣partial-button.html
+						┃┗partial-mixin.html
+						┗css
+						　┣src
+						　┣vendor
+						　┗style.css
+						```
+						[こんな感じ](docs/index.html)
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+					## StyleDoccoの不具合
+					* 擬似クラスのプレビューがSafariでしか動かない。<br>
+					<small>なのでプレビューエリアにjs追加してごにょってしてる</small>
+					* 一度生成したあとに再生成しても反映されない。<br>
+					<small>docsディレクトリを空にしてから生成するとうまくいくので、grunt-contrib-cleanを使う</small>
+					
+					</script>
+				</section>
+
+
+				<!--
+				<section data-markdown>
+					<script type="text/template">
+					</script>
+				</section>
+				-->
 
 			<!-- /.slides --></div>
 

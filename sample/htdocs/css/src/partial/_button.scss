@@ -1,0 +1,35 @@
+/*
+## 普通のボタン
+
+```
+<a class="button" href="#">normal</a>
+<a class="button :hover" href="#">hover</a>
+<a class="button :active" href="#">active</a>
+<a class="button is-disabled" href="#">disabled</a>
+```
+
+*/
+.button{
+	@include button(#ccc, #fff, 14px);
+}
+
+
+/*
+## レスポンシブなボタン
+
+```
+<a class="button-rwd" href="#">normal</a>
+<a class="button-rwd :hover" href="#">hover</a>
+<a class="button-rwd :active" href="#">active</a>
+<a class="button-rwd is-disabled" href="#">disabled</a>
+```
+
+*/
+.button-rwd{
+	@extend .button;
+	@include max-screen(320px) {
+		padding: .5em;
+		background-color: tomato;
+	}
+}
+

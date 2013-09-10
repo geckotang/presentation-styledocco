@@ -1,0 +1,11 @@
+/*
+# Base
+
+partialとvendorのscssを読み込む
+
+*/
+@import "../vendor/_normalize";
+@import "../vendor/media-queries";
+@import "partial/mixin";
+@import "partial/button";
+@import "partial/foo/bar";

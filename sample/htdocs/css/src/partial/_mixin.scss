@@ -1,0 +1,40 @@
+/*
+# ボタンを作るmixin
+
+`@include button(#1B6AA5, white, 1em);`
+
+## 引数:
+
+- `background`: Background of the button;
+- `color`: Color of the button;
+- `font-size`: Font size of the button;
+
+*/
+// ドキュメントに載せたくない場合は半角スペースや
+// タブ文字を入れることで回避できます。
+@mixin button($background, $color, $font-size){
+	display: inline-block;
+	font-size: $font-size;
+	color: $color;
+	background-color: $background;
+	padding: 1em;
+	border-radius: 10px;
+	&:hover {
+		color: $background;
+		background-color: $color;
+		box-shadow: 0 0 2px #000;
+	}
+	&:active {
+		position: relative;
+		top: 2px;
+		color: $background;
+		background-color: $color;
+		box-shadow: inset 0 0 10px #000;
+	}
+	&.is-disabled {
+		color: #fff;
+		background-color: #ccc;
+	}
+}
+
+

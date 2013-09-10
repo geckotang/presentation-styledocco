@@ -63,11 +63,11 @@
 				<section data-markdown>
 					<script type="text/template">
 						## Styledoccoを選んだ理由
-						* Gruntのプラグインある
 						* Compass使っても問題ない
 						* ある程度見た目良い
 						* Markdownで記述していく
-						* プレビューエリアのりサイズ機能
+						* プレビューエリアのリサイズ機能<br>
+						<small>240,320,768,1024,1280px</small>
 						---
 						<small>KSS-nodeはLessしか使えないの…</small>
 					</script>
@@ -99,7 +99,7 @@
 						## ディレクトリ構成
 						```
 						htdocs
-						┣docs
+						┣_doc
 						┗css
 						　┣src
 						　┃┣doc-preview.js
@@ -234,7 +234,7 @@ module.exports = function(grunt){
 
 				<section data-markdown>
 					<script type="text/template">
-						## コメントを追記
+						## SCSSにコメントを追記
 
 						``` sass
 /*
@@ -255,14 +255,14 @@ module.exports = function(grunt){
 	border-radius: 10px;
 	&:hover {
 		color: $background;
-		background-color: $color;
+		background-color: tomato;
 		box-shadow: 0 0 2px #000;
 	}
 	&:active {
 		position: relative;
 		top: 2px;
 		color: $background;
-		background-color: $color;
+		background-color: tomato;
 		box-shadow: inset 0 0 10px #000;
 	}
 	&.is-disabled {
@@ -297,7 +297,7 @@ module.exports = function(grunt){
 						　┣vendor
 						　┗style.css
 						```
-						[こんな感じ](docs/index.html)
+						[こんな感じ](sample/htdocs/_doc/partial-button.html)
 					</script>
 				</section>
 
@@ -313,6 +313,26 @@ module.exports = function(grunt){
 					</script>
 				</section>
 
+
+				<section data-markdown>
+					<script type="text/template">
+					## やらないほうがいい事
+					* watchしてscssを変更するたびにスタイルガイド生成<br>
+					<small>若干時間かかる。デプロイ時など何かしらのタイミングでやるのがいい</small>
+					* jsDocのような@mixinや@functionのドキュメント<br>
+					<small>pre要素とか使えば[出来なくはない](sample/htdocs/_doc/partial-mixin.html)けど、 StyleDoccoやKSSは、あくまでスタイルガイド</small>
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+					### おまけ:プレビューの仕組み
+
+					![仕組み](img/img1.png)
+
+					</script>
+				</section>
 
 				<!--
 				<section data-markdown>

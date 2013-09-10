@@ -258,55 +258,35 @@ table {
 /*
 ## 普通のボタン
 
-```
-<a class="button" href="#">normal</a>
-<a class="button :hover" href="#">hover</a>
-<a class="button :active" href="#">active</a>
-<a class="button is-disabled" href="#">disabled</a>
-```
+    <a class="button" href="#">normal</a>
+    <a class="button  :hover" href="#">hover</a>
+    <a class="button  :active" href="#">active</a>
+    <a class="button  is-disabled" href="#">disabled</a>
 
 */
-.button, .button-rwd {
+.button {
   display: inline-block;
   font-size: 14px;
-  color: white;
-  background-color: #cccccc;
+  color: #fff;
+  background-color: #ccc;
   padding: 1em;
   border-radius: 10px;
 }
-.button:hover, .button-rwd:hover {
-  color: #cccccc;
-  background-color: white;
+.button:hover {
+  color: white;
+  background-color: tomato;
   box-shadow: 0 0 2px #000;
 }
-.button:active, .button-rwd:active {
+.button:active {
   position: relative;
   top: 2px;
-  color: #cccccc;
-  background-color: white;
+  color: white;
+  background-color: tomato;
   box-shadow: inset 0 0 10px #000;
 }
-.button.is-disabled, .is-disabled.button-rwd {
+.button.is-disabled {
   color: #fff;
   background-color: #ccc;
-}
-
-/*
-## レスポンシブなボタン
-
-```
-<a class="button-rwd" href="#">normal</a>
-<a class="button-rwd :hover" href="#">hover</a>
-<a class="button-rwd :active" href="#">active</a>
-<a class="button-rwd is-disabled" href="#">disabled</a>
-```
-
-*/
-@media screen and (max-width: 320px) {
-  .button-rwd {
-    padding: .5em;
-    background-color: tomato;
-  }
 }
 
 /*

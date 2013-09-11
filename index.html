@@ -98,8 +98,8 @@
 					<script type="text/template">
 						## ディレクトリ構成
 						```
-						htdocs
-						┣_doc
+						files
+						┣doc
 						┗css
 						　┣src
 						　┃┣doc-preview.js
@@ -134,22 +134,22 @@ module.exports = function(grunt){
         options: {
           framework: { name: 'styledocco' },
           name: 'プロジェクトX',
-          template: { include: ['htdocs/css/src/doc-preview.js'] }
+          template: { include: ['files/css/src/doc-preview.js'] }
         },
-        src: [ 'htdocs/css/**/*.scss', '!htdocs/css/vendor/**/*.scss' ],
-        dest: 'htdocs/_doc'
+        src: [ 'files/css/**/*.scss', '!files/css/vendor/**/*.scss' ],
+        dest: 'files/doc'
       }
     },
     sass: {
       dist: {
         options: { style: 'expanded' },
-        files: { 'htdocs/css/style.css': 'htdocs/css/src/style.scss' }
+        files: { 'files/css/style.css': 'files/css/src/style.scss' }
       }
     },
     clean: ['<%= styleguide.styledocco.dest %>'],
     watch: {
       scss: {
-        files: 'htdocs/css/**/*.scss',
+        files: 'files/css/**/*.scss',
         tasks: ['clean', 'sass', 'styleguide']
       }
     }
@@ -297,7 +297,7 @@ module.exports = function(grunt){
 						　┣vendor
 						　┗style.css
 						```
-						[こんな感じ](sample/htdocs/_doc/partial-button.html)
+						[こんな感じ](sample/files/doc/partial-button.html)
 					</script>
 				</section>
 
@@ -320,7 +320,7 @@ module.exports = function(grunt){
 					* watchしてscssを変更するたびにスタイルガイド生成<br>
 					<small>若干時間かかる。デプロイ時など何かしらのタイミングでやるのがいい</small>
 					* jsDocのような@mixinや@functionのドキュメント<br>
-					<small>pre要素とか使えば[出来なくはない](sample/htdocs/_doc/partial-mixin.html)けど、 StyleDoccoやKSSは、あくまでスタイルガイド</small>
+					<small>pre要素とか使えば[出来なくはない](sample/files/doc/partial-mixin.html)けど、 StyleDoccoやKSSは、あくまでスタイルガイド</small>
 					</script>
 				</section>
 

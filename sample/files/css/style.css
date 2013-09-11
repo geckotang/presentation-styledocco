@@ -264,7 +264,7 @@ table {
     <a class="button  is-disabled" href="#">disabled</a>
 
 */
-.button {
+.button, .button--abnormal {
   display: inline-block;
   font-size: 14px;
   color: #fff;
@@ -272,21 +272,35 @@ table {
   padding: 1em;
   border-radius: 10px;
 }
-.button:hover {
+.button:hover, .button--abnormal:hover {
   color: white;
   background-color: tomato;
   box-shadow: 0 0 2px #000;
 }
-.button:active {
+.button:active, .button--abnormal:active {
   position: relative;
   top: 2px;
   color: white;
   background-color: tomato;
   box-shadow: inset 0 0 10px #000;
 }
-.button.is-disabled {
+.button.is-disabled, .is-disabled.button--abnormal {
   color: #fff;
   background-color: #ccc;
+}
+
+ /*
+## 普通じゃないのボタン
+
+    <a class="button--abnormal" href="#">normal</a>
+    <a class="button--abnormal  :hover" href="#">hover</a>
+    <a class="button--abnormal  :active" href="#">active</a>
+    <a class="button--abnormal  is-disabled" href="#">disabled</a>
+
+*/
+.button--abnormal {
+  color: yellow;
+  background-color: blue;
 }
 
 /*

@@ -11,7 +11,7 @@ module.exports = function(grunt){
           style: 'expanded'
         },
         files: {
-          'htdocs/css/style.css': 'htdocs/css/src/style.scss'
+          'files/css/style.css': 'files/css/src/style.scss'
         }
       }
     },
@@ -23,20 +23,20 @@ module.exports = function(grunt){
 					},
 					name: 'プロジェクトX',
           template: {
-           include: ['htdocs/css/src/doc-preview.js']
+           include: ['files/css/src/doc-preview.js']
           }
 				},
 				src: [
-          'htdocs/css/**/*.scss',
-          '!htdocs/css/vendor/**/*.scss'
+          'files/css/**/*.scss',
+          '!files/css/vendor/**/*.scss'
 				],
-        dest: 'htdocs/_doc'
+        dest: 'files/doc'
 			}
 		},
     clean: ['<%= styleguide.styledocco.dest %>'],
 		watch: {
 			scss: {
-				files: 'htdocs/css/**/*.scss',
+				files: 'files/css/**/*.scss',
 				tasks: ['clean', 'sass', 'styleguide']
 			}
 		}
